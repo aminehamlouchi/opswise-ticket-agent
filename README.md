@@ -2,15 +2,9 @@
 
 OpsWise Ticket Agent is a helpdesk automation agent for entry-level IT and infrastructure teams. It ingests raw support tickets, classifies the issue, retrieves a matching runbook, assigns an SLA target, and exports a triage report.
 
-The MVP is intentionally CLI-first so it can run as a local batch job, GitHub Actions scheduled workflow, or future FastAPI service.
+The project is CLI-first so it can run as a local batch job, scheduled script, or future service integration.
 
-## Demo
-
-Screenshot placeholders:
-
-- `docs/screenshots/cli-run.png` - batch triage command.
-- `docs/screenshots/report.png` - generated Markdown report.
-- `docs/screenshots/json-output.png` - machine-readable triage output.
+## Quickstart
 
 Run the sample:
 
@@ -32,7 +26,7 @@ flowchart LR
     E --> F["Markdown and JSON exports"]
 ```
 
-## What Makes It Agentic
+## Triage Workflow
 
 The agent runs a multi-step workflow:
 
@@ -43,7 +37,7 @@ The agent runs a multi-step workflow:
 5. Produce next actions and escalation criteria.
 6. Export both human-readable and machine-readable reports.
 
-The current model is deterministic and testable. A future version can replace the classifier or planner with an LLM while keeping the same tool boundaries.
+The current workflow is deterministic and testable. A future version can swap in a model-backed classifier or planner while keeping the same tool boundaries.
 
 ## Ticket CSV Schema
 
@@ -75,10 +69,9 @@ docker run --rm -v "$PWD/outputs:/app/outputs" opswise-ticket-agent
 - Containerized cron job on a small VM.
 - Future FastAPI service with Jira, GitHub Issues, or Slack integrations.
 
-## CI Template
+## Testing
 
-The GitHub Actions workflow template is included at `docs/github-actions/ci.yml`. Move it to `.github/workflows/ci.yml` after authenticating GitHub CLI with the `workflow` scope.
-
-## Recruiter Notes
-
-This repo shows Python automation, infrastructure thinking, clean module boundaries, CLI design, sample data, tests, CI, Docker, and an applied IT support workflow.
+```bash
+pytest
+python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/triage-report.md --json-out outputs/triage-report.json
+```
