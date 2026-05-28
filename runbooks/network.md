@@ -1,0 +1,13 @@
+id: network
+title: Network Connectivity Triage
+category: network
+keywords: wifi, vpn, network, latency, dns, ethernet, connection, internet
+
+## Steps
+
+- Identify whether the issue affects one user, one location, or many users.
+- Check physical connection, Wi-Fi signal, VPN status, and recent network changes.
+- Capture IP address, DNS server, gateway, and error messages.
+- Test a known-good device or network segment before escalating.
+
+Escalation: Escalate to network engineering if multiple users are affected, DNS fails broadly, or a site outage is suspected.

@@ -1,0 +1,5 @@
+id,submitted_at,requester,subject,description,affected_asset,priority
+TCK-1001,2026-05-28T08:15:00,Sarah A.,VPN will not connect,"VPN fails after MFA approval and says connection timed out.",ThinkPad-4421,medium
+TCK-1002,2026-05-28T09:05:00,Yusuf K.,Account locked before shift,"User cannot login to workstation and has a production deadline this morning.",AD account,high
+TCK-1003,2026-05-28T10:20:00,Leila O.,Docking station monitor blank,"Laptop works alone but monitor is blank when connected to the dock.",Dock-19,low
+TCK-1004,2026-05-28T11:40:00,Hamza A.,Teams crashes during calls,"Teams app crashes when joining manager meeting. Browser version works.",Teams desktop,medium

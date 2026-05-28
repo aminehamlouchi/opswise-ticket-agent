@@ -1,0 +1,13 @@
+id: endpoint
+title: Endpoint Device Triage
+category: endpoint
+keywords: laptop, printer, monitor, dock, docking, blue screen, device, keyboard
+
+## Steps
+
+- Confirm the device tag, operating system, location, and warranty status.
+- Reproduce the issue or capture a photo/error code from the requester.
+- Check power, cables, docking station, peripheral pairing, and recent updates.
+- Apply the standard restart, driver, or replacement workflow if approved.
+
+Escalation: Escalate to endpoint engineering if the device repeatedly crashes, fails encryption checks, or needs hardware replacement approval.
