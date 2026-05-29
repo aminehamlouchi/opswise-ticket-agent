@@ -11,34 +11,35 @@ def write_json(plans: list[TriagePlan], path: Path) -> None:
     path.write_text(json.dumps([plan.to_dict() for plan in plans], indent=2), encoding="utf-8")
 
 
-def write_markdown(plans: list[TriagePlan], path: Path) -> None:
+def write_text_report(plans: list[TriagePlan], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    lines = ["# OpsWise Triage Report", ""]
+    lines = ["OpsWise Triage Report", "=====================", ""]
     for plan in plans:
         lines.extend(
             [
-                f"## Ticket {plan.ticket.id}: {plan.ticket.subject}",
+                f"Ticket {plan.ticket.id}: {plan.ticket.subject}",
+                "-" * (len(plan.ticket.id) + len(plan.ticket.subject) + 9),
                 "",
-                f"- Requester: {plan.ticket.requester}",
-                f"- Category: {plan.classification.category}",
-                f"- Severity: {plan.classification.severity}",
-                f"- Confidence: {plan.classification.confidence}",
-                f"- SLA target: {plan.sla_target}",
-                f"- Runbook: {plan.runbook.runbook.title}",
+                f"Requester: {plan.ticket.requester}",
+                f"Category: {plan.classification.category}",
+                f"Severity: {plan.classification.severity}",
+                f"Confidence: {plan.classification.confidence}",
+                f"SLA target: {plan.sla_target}",
+                f"Runbook: {plan.runbook.runbook.title}",
                 "",
-                "### Recommended Actions",
+                "Recommended actions:",
                 "",
             ]
         )
-        lines.extend(f"1. {action}" for action in plan.recommended_actions)
+        lines.extend(f"{index}. {action}" for index, action in enumerate(plan.recommended_actions, start=1))
         lines.extend(
             [
                 "",
-                "### Escalation Criteria",
+                "Escalation criteria:",
                 "",
                 plan.escalation_criteria,
                 "",
-                "### Tool Trace",
+                "Processing notes:",
                 "",
             ]
         )

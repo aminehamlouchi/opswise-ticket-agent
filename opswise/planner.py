@@ -28,7 +28,7 @@ class TriageAgent:
             *runbook_match.runbook.steps[:4],
             "Document resolution notes and update the requester before closing the ticket.",
         ]
-        trace.append(ToolTrace("plan_actions", f"Generated {len(recommended_actions)} actions"))
+        trace.append(ToolTrace("plan_actions", f"Prepared {len(recommended_actions)} actions"))
 
         return TriagePlan(
             ticket=ticket,

@@ -12,7 +12,7 @@ Run the sample:
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
-python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/triage-report.md --json-out outputs/triage-report.json
+python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/triage-report.txt --json-out outputs/triage-report.json
 ```
 
 ## Architecture
@@ -23,7 +23,7 @@ flowchart LR
     B --> C["Runbook retrieval tool"]
     C --> D["SLA policy tool"]
     D --> E["Triage planning tool"]
-    E --> F["Markdown and JSON exports"]
+    E --> F["Text and JSON reports"]
 ```
 
 ## Triage Workflow
@@ -53,7 +53,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
-python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/report.md
+python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/report.txt
 ```
 
 ## Docker
@@ -73,5 +73,5 @@ docker run --rm -v "$PWD/outputs:/app/outputs" opswise-ticket-agent
 
 ```bash
 pytest
-python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/triage-report.md --json-out outputs/triage-report.json
+python -m opswise triage --tickets sample_data/tickets.csv --runbooks runbooks --out outputs/triage-report.txt --json-out outputs/triage-report.json
 ```

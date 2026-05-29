@@ -12,7 +12,8 @@ def load_tickets(path: Path) -> list[Ticket]:
 
 
 def load_runbooks(directory: Path) -> list[Runbook]:
-    return [_parse_runbook(path) for path in sorted(directory.glob("*.md"))]
+    runbook_paths = sorted([*directory.glob("*.txt"), *directory.glob("*.md")])
+    return [_parse_runbook(path) for path in runbook_paths]
 
 
 def _parse_runbook(path: Path) -> Runbook:
@@ -23,20 +24,33 @@ def _parse_runbook(path: Path) -> Runbook:
         if not line.strip():
             body_start = index + 1
             break
+        if ":" not in line:
+            break
         key, value = line.split(":", 1)
-        metadata[key.strip()] = value.strip()
+        metadata[key.strip().lower()] = value.strip()
 
     steps: list[str] = []
     escalation = "Escalate if the issue remains unresolved after standard troubleshooting."
+    section = ""
     for line in lines[body_start:]:
         stripped = line.strip()
-        if stripped.startswith("- "):
-            steps.append(stripped[2:])
-        elif stripped.lower().startswith("escalation:"):
+        lower = stripped.lower()
+        if lower in {"steps:", "first pass:"}:
+            section = "steps"
+            continue
+        if lower == "escalation:":
+            section = "escalation"
+            continue
+        if lower.startswith("escalation:"):
             escalation = stripped.split(":", 1)[1].strip()
+            section = "escalation"
+        elif stripped.startswith("- "):
+            steps.append(stripped[2:])
+        elif stripped and section == "escalation":
+            escalation = stripped
 
     return Runbook(
-        id=metadata.get("id", path.stem),
+        id=metadata.get("runbook", metadata.get("id", path.stem)),
         title=metadata.get("title", path.stem.replace("-", " ").title()),
         category=metadata.get("category", "general"),
         keywords=[item.strip() for item in metadata.get("keywords", "").split(",") if item.strip()],
